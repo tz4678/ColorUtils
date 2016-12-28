@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sort Strings</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/normalize.css">
+    <style type="text/css">
+      body {
+        font: 13px/1.2em Arial, sans-serif;
+      }
+
+      .wrapper {
+        margin: auto;
+        width: 980px;
+      }
+
+      .content {
+        /* background-color: #efefef; */
+        /* Из-за h2 будет отступ сверху, если не задать padding */
+        padding: 10px;
+      }
+
+      .content textarea {
+        /* http://stackoverflow.com/questions/4698054/css-does-the-width-include-the-padding */
+        box-sizing: border-box;
+        /* line-height * 5 */
+        height: 5.5em;
+        line-height: 1.1em;
+        width: 100%;
+      }
+    </style>
+    <script type="text/javascript">
+      'use strict';
+      let $ = q => document.querySelector(q); 
+
+      window.addEventListener('load', () => {
+        $('#sort').onclick = (e) => {
+          e.preventDefault();
+          let input = $('#input').value;
+          input = input.split('\n');
+          input.sort();
+          $('#output').value = input.join('\n');
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="content">
+        <h2>Sort Strings</h2>
+        <form>
+          <div>
+            <textarea id="input" placeholder="Input"></textarea>
+          </div>
+          <div>
+            <textarea id="output" placeholder="Output"></textarea>
+          </div>
+          <div>
+            <button id="sort">Sort</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

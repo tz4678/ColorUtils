@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Circle Drawing</title>
+  <style type="text/css">
+    #canvas {
+      background: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="300" height="240">
+    You browser doesn't support canvas!
+  </canvas>
+  <script type="text/javascript">
+    const $=(q)=>document.querySelector(q);
+    const $$=(q)=>[...document.querySelectorAll(q)];
+    const DEG2RAD=Math.PI/180;
+ 
+    class Point{
+      constructor(x, y){
+        this.x=x;
+        this.y=y;
+      }
+      set x(v){this._x=Math.round(v);}
+      set y(v){this._y=Math.round(v);}
+      get x(){return this._x;}
+      get y(){return this._y;}
+      eq(p){return this.x===p.x&&this.y===p.y}
+   }
+ 
+   // Если не известен радиус
+   function rotatePoint(point, pivot, angle) {
+     let dx = point.x - pivot.x
+       , dy = point.y - pivot.y
+       , radians = angle * DEG2RAD
+       , sin = Math.sin(radians)
+       , cos = Math.cos(radians)
+       , x = pivot.x + cos * dx - sin * dy
+       , y = pivot.y + sin * dx + cos * dy;
+      return new Point(x, y);
+    }
+    
+    function getCirclePoint(pivot, angle, radius) {
+      let radians = angle * DEG2RAD;
+      return new Point(pivot.x + Math.sin(radians) * radius, pivot.y - Math.cos(radians) * radius);
+    }
+ 
+    let cnv = $('#canvas')
+      , ctx = cnv.getContext('2d')
+      , imgData=ctx.getImageData(0,0,cnv.width,cnv.height);
+ 
+    // Центр
+    let pivot = new Point(cnv.width/2,cnv.height/2);
+    // console.log(pivot);
+    // Радиус
+    let radius = 70;
+    // Длина окружности
+    let length=2*Math.PI*radius;
+    // Шаг
+    let step=360/length;
+    // Точка
+    for (let angle=0;angle<=360;angle+=step){
+     let point=getCirclePoint(pivot, angle, radius);
+     console.log(point);
+     // Вычисляем смещение
+     let i=(point.y*imgData.width+point.x)*4;
+     imgData.data[i+0]=0;
+     imgData.data[i+1]=0;
+     imgData.data[i+2]=0;
+     imgData.data[i+3]=255;
+   }
+   ctx.putImageData(imgData,0,0);
+ </script>
+</body>
+</html>

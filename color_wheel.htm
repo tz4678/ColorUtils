@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Цветовой круг</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+    <script type="text/javascript" src="src/color-utils.js"></script>
+    <script type="application/javascript" src="assets/js/main.js"></script>
+    <style type="text/css">
+      #color-wheel{
+        /* Только портит изображение */
+        /*filter: blur(1px);*/
+      }
+      .color-wheel-wrapper{
+        display: flex;
+        flex-flow: row wrap;
+      }
+      .color-block{
+        padding: 10px;
+        flex: 1;
+      }
+      .chroma-block{
+        text-align: center;
+        flex: 0 0 120px;
+      }
+      #chroma-slider {
+        writing-mode: bt-lr; /* IE */
+        -webkit-appearance: slider-vertical; /* WebKit */
+        height: 300px;
+      }
+      #color-preview{
+        width: 160px;
+        /*height: 160px;*/
+        text-align: center;
+        line-height: 160px;
+        font-size: 150%;
+      }
+      .chroma-block label,
+      .color-details-block label{
+        font-weight: bold;
+      }
+      .chroma-block input, .color-details-block input{
+        width: 3em;
+      }
+      .additional-color{
+        /*border-radius: 5px;*/
+        display:inline-block;
+        font-size: 80%;
+        line-height: 80px;
+        margin: 10px;
+        text-align: center;
+        width: 80px;
+      }
+      #color-picker{
+        position:absolute;
+        display:none;
+        top:0;
+        left:0;
+        /*Отключаем курсор*/
+        cursor:none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header"></header>
+      <div class="content">
+        <h2>Цветовой круг</h2>
+        <div class="color-wheel-wrapper">
+          <div class="color-block chroma-block">
+            <input id="chroma-slider" type="range" orient="vertical" min="0" max="140" step="1"><br>
+            <label for="chroma-field">Chroma</label>
+            <input id="chroma-field" type="number" min="0" max="140">
+          </div>
+          <div class="color-block color-wheel-block">
+            <canvas id="color-wheel" width="300" height="300"></canvas>
+            <svg id="color-picker" width="20" height="20">
+              <circle cx="10" cy="10" r="9" fill="#fff" stroke="#000" stroke-width="2px">
+            </svg>
+          </div>
+          <div class="color-block color-details-block">
+            <div id="color-preview"></div>
+            <p>
+              <label for="r">R</label>
+              <input id="r" type="number" min="0" max="255" step="1">
+            </p>
+            <p>
+              <label for="g">G</label>
+              <input id="g" type="number" min="0" max="255" step="1">
+            </p>
+            <p>
+              <label for="b">R</label>
+              <input id="b" type="number" min="0" max="255" step="1">
+            </p>
+            <!--
+            <p>
+              <label for="hex">HEX</label>
+              <input id="hex">
+            </p>
+            -->
+          </div>
+        </div>
+        <h3>Дополнительные цвета</h3>
+        <p>Чтобы выбрать цвет, кликните по цветному прямоугольнику два раза.</p>
+        <h4>Complementary Color</h4>
+        <div id="complementary-color"></div>
+        <h4>Split Complementary Colors</h4>
+        <div id="split-complementary-colors"></div>
+        <h4>Triadic Colors</h4>
+        <div id="triadic-colors"></div>
+        <h4>Analogous Colors</h4>
+        <div id="analogous-colors"></div>
+        <h4>Tetradic Colors</h4>
+        <div id="tetradic-colors"></div>
+        <h3>Немного теории</h3>
+        <p>Как известно из школьного курса физики свет разлагается призмой на спектральные цвета. Белый цвет содержит все спектральные цвета: красный, оранжевый, желтый, зеленый, голубой, синий и фиолетовый. Из этих цветов только красный, зеленый и синий являются базовыми, так как их нельзя получить путем смешения с другими спектральными цветами. С этими тремя цветами работает модель RGB (Red, Green, Blue). В ней значения красного, зеленого и синего задаются числами от 0 до 255 (1 байтом). Таким образом, RGB позволяет хранить 16777216 цветов (256<sup>3</sup>). По-мимо RGB существует множество других моделей представления цвета, например, CMYK, используемая в типографии.
+        <p>Цветовой круг был придуман Исааком Ньютоном. На цветовом круге расположены все спектральные цвета. В информатике идею цветового круга реализуют модели <a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">HSV</a> и <a href="https://en.wikipedia.org/wiki/Lab_color_space" target="_blank">LCH</a>.
+        <p>HSV, она же HSB. H (Hue) - значение от 0 до 360°, увеличивая его, мы двигаемся по цветовому кругу от красного до фиолетового. S (Saturation) - насыщенность цвета в процентах. Чем меньше это число, тем оттенок светлее (0 - белый). V (Value) или B (Brightness) - яркость в процентах (0 - черный, 100 - насыщенный цвет).
+        <p>LCH похожа на HSV. В ней по-мимо основных цветов на цветовом круге находятся вторичные и третичные цвета. Вторичные цвета получаются путем смешения основных цветов, третичные - одного основного и одного вторичного цветов. Цвета расположенные на противоположных краях цветового круга называют комплиментарными цветами. Они при смешении образуют серый цвет. L (Lightness) - яркость цвета (при 0 - получаются разные цвета от черного до темных оттенков других цветов). C (Chroma) - насыщенность, принимает значение от 0 до 140 (при 0 получается серый как при смешении комплиментарных цветов). H (Hue) - угол на цветовом круге. Данная модель наиболее гармонична и широко используется в дизайне. Она используется в данном примере.
+      </div>
+      <footer class="footer">
+        <div class="copyright">
+          &copy; Sergei Snegirev &lt;<a href="mailto:tz4678@gmail.com">tz4678@gmail.com</a>&gt;, 2016
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
