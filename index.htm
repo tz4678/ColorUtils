@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Цветовой круг &#124; Color Utils</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/color-picker.css" rel="stylesheet">
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/color-lib.js"></script>
+    <script src="assets/js/event-emitter.js"></script>
+    <script src="assets/js/color-picker.js"></script>
+    <style type="text/css">
+      #preview {
+        float: left;
+        padding: 10px;
+      }
+      #color-preview {
+        line-height: 120px;
+        text-align: center;
+        width: 120px;
+      }
+      #preview label {
+        display: inline-block;
+        font-weight: bold;
+        width: 4em;
+      }
+      #preview input[type="number"] {
+        width: 3em;
+      }
+      .color-block {
+        border-radius: 5px;
+        display: inline-block;
+        line-height: 80px;
+        margin: 5px;
+        width: 80px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <header class="header">
+          <a href="/" class="brand">
+            <h1>Color Utils</h1>
+          </a>
+          <nav class="nav"><ul><li>Цветовой круг</li><li><a href="color_names.htm">Имена цветов</a></li><li><a href="https://github.com/tz4678/ColorUtils" target="_blank">GitHub</a></li></ul></nav>
+        </header>
+        <main class="main">
+          <h2>Цветовой круг</h2> 
+          <div id="color-picker"></div>
+          <div id="preview">
+            <div id="color-preview"></div>
+            <p>
+              <label for="r">R:</label>
+              <input id="r" type="number" min="0" max="255" step="1">
+            </p><p>
+              <label for="g">G:</label>
+              <input id="g" type="number" min="0" max="255" step="1">
+            </p><p>
+              <label for="b">B:</label>
+              <input id="b" type="number" min="0" max="255" step="1">
+            </p>
+          </div>
+          <br clear="both">
+          <h3>Цветовые схемы</h3>
+          <h4>Комплиментарная цветовая схема</h4>
+          <div id="complementary"></div>
+          <h4>Троичная цветовая схема</h4>
+          <div id="triad"></div>
+          <h4>Квадратичная цветовая схема</h4>
+          <div id="square"></div>
+          <h3>Оттенки</h3>
+          <h4>Оттенки белого</h4>
+          <div id="tints"></div>
+          <h4>Оттенки черного</h4>
+          <div id="shades"></div>
+          <h4>Оттенки серого</h4>
+          <div id="tones"></div>
+        </main>
+        <footer class="footer">&copy; 2016-2017 Sergei Snegirev</footer>
+      </div>
+    </div>
+    <script type="text/javascript">
+      function setColor(c) {
+        colorPreview.innerText = c;
+        colorPreview.style.background = c;
+        colorPreview.style.color = c.blackOrWhiteText();
+        r.value = c.r;
+        g.value = c.g;
+        b.value = c.b;
+        setColorBlocks('complementary', [c, c.complement()]);
+        setColorBlocks('triad', c.triad());
+        setColorBlocks('square', c.tetrad());
+        const tints = [];
+        const shades = [];
+        const tones = [];
+        for (let i = 0; i < 1; i += 0.2) {
+          tints.push(c.tint(i));
+          shades.push(c.shade(i));
+          tones.push(c.tone(i));
+        }
+        setColorBlocks('tints', tints);
+        setColorBlocks('shades', shades);
+        setColorBlocks('tones', tones);
+      }
+
+      function createColorBlock(c) {
+        const div = document.createElement('div');
+        div.classList.add('color-block');
+        div.innerText = c;
+        div.style.background = c;
+        div.style.color = c.blackOrWhiteText();
+        return div;
+      }
+
+      function setColorBlocks(id, colors) {
+        const container = $('#' + id);
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
+        }
+        for (let color of colors) {
+          container.appendChild(createColorBlock(color));
+        }
+      }
+
+      const colorPreview = $('#color-preview');
+      const r = $('#r');
+      const g = $('#g');
+      const b = $('#b');
+
+      r.onchange = g.onchange = b.onchange = () => {
+        colorPicker.setRgb(r.value, g.value, b.value);
+        setColor(colorPicker.getColor());
+      }; 
+
+      const colorPicker = new ColorPicker($('#color-picker'));
+      setColor(colorPicker.getColor());
+      colorPicker.on('colorPicked', (color) => {
+        setColor(color);
+      });
+    </script>
+  </body>
+</html>

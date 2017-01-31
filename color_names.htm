@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Имена цветов &#124; Color Utils</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/color-lib.js"></script>
+    <style type="text/css">
+      .color-name {
+        line-height: 3em;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <header class="header">
+          <a href="/" class="brand">
+            <h1>Color Utils</h1>
+          </a>
+          <nav class="nav"><ul><li><a href="index.htm">Цветовой круг</a></li><li>Имена цветов</li><li><a href="https://github.com/tz4678/ColorUtils" target="_blank">GitHub</a></li></ul></nav>
+        </header>
+        <main class="main">
+          <h2>Имена цветов</h2>
+          <p>Для задания цвета элемента на странице можно использовать ключевые слова. Все современные браузеры поддерживают более 140 ключевых слов для обозначения цвета.</p>
+          <div id="color-names"></div>
+        </main>
+        <footer class="footer">&copy; 2016-2017 Sergei Snegirev</footer>
+      </div>
+    </div>
+    <script type="text/javascript">
+      const container = $('#color-names');
+      // SyntaxError: missing = in const declaration???
+      for (let name of Object.keys(COLORS)) {
+        const color = COLORS[name];
+        const elem = document.createElement('div');
+        elem.classList.add('color-name');
+        elem.style.background = name;
+        elem.style.color = color.blackOrWhiteText();
+        //name += ', ' + color.hex() + ', ' + color.rgb(); 
+        elem.appendChild(document.createTextNode(name));
+        container.appendChild(elem);
+      }
+    </script>
+  </body>
+</html>

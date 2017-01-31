@@ -1,0 +1,73 @@
+.color-picker {
+  float: left;
+  user-select: none;
+}
+
+.picker-container {
+  display: flex;
+  /*
+  flex-direction: row;
+  flex-wrap: wrap;
+   */
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.wheel-wrapper {
+  flex: 0;
+  padding: 10px;
+}
+
+.wheel-container {
+  /* 
+
+  У родительского эелемента элемента с абсолютным позиционированием должно
+  быть относительное поизиционирование
+
+   */
+  position: relative;
+}
+
+.wheel-pointer {
+  cursor: pointer;
+  position: absolute;
+  border: solid 2px #000;
+  border-radius: 10px;
+  width: 16px;
+  height: 16px;
+}
+    
+.wheel-canvas {
+  /*
+  
+  Отступ снизу у canvas.
+
+  http://stackoverflow.com/questions/9878090/eliminate-ghost-margin-below-html5-canvas-element
+   */
+  vertical-align: bottom;
+}
+
+.brightness-slider-wrapper {
+  flex: 0;
+  padding: 10px;
+}
+
+.brightness-slider-container {
+  position: relative;
+}
+
+.brightness-slider-pointer {
+  cursor: pointer;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 28px;
+  height: 8px;
+  background: linear-gradient(to bottom, #fff, #ebebeb);
+  border: solid 1px #ebebeb;
+  border-radius: 2px;
+}
+
+.brightness-slider-canvas {
+  vertical-align: bottom;
+}

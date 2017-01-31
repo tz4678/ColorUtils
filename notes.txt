@@ -1,0 +1,7 @@
+Функции и классы объявляются до их использования
+
+http://practicaltypography.com/line-spacing.html
+http://html5.by/blog/flexbox/
+http://stackoverflow.com/questions/17555682/height-100-or-min-height-100-for-html-and-body-elements
+http://www.colors.commutercreative.com/grid/
+https://learn.javascript.ru/coordinates
