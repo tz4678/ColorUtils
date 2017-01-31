@@ -128,6 +128,42 @@
       return this.interpolateTo(self.COLORS.grey, t);
     }
 
+    /**
+      * Returns a copy of a current color and its tints
+      */
+    tints(n = 5) {
+      const step = 1 / n;
+      const colors = [this.clone()];
+      let i = 0;
+      while (i < 1) {
+        i += step;
+        colors.push(this.tint(i));
+      }
+      return colors;
+    }
+
+    shades(n = 5) {
+      const step = 1 / n;
+      const colors = [this.clone()];
+      let i = 0;
+      while (i < 1) {
+        i += step;
+        colors.push(this.shade(i));
+      }
+      return colors;
+    }
+
+    tones(n = 5) {
+      const step = 1 / n;
+      const colors = [this.clone()];
+      let i = 0;
+      while (i < 1) {
+        i += step;
+        colors.push(this.tone(i));
+      }
+      return colors;
+    }
+
     hsv() {
       // http://www.rapidtables.com/convert/color/rgb-to-hsv.htm
       const r = this.r / 255;
@@ -161,12 +197,16 @@
       return Color.fromHsv(hsv);
     }
 
-    complement() {
-      return this.hueShift(180);
+    // Цветовые схемы
+    complementary() {
+      return [
+        this.clone(),
+        this.hueShift(180)
+      ];
     }
 
     // Движемся по часовой стрелке
-    triad(angle = 120) {
+    triadic(angle = 120) {
       return [
         this.clone(),
         this.hueShift(angle),
@@ -174,20 +214,20 @@
       ];
     }
 
-    splitComplements() {
-      return this.triad(150);
+    splitComplementary() {
+      return this.triadic(150);
     }
 
     analogous() {
-      return this.triad(30);
+      return this.triadic(30);
     }
 
     // Double split complementary
-    tetrad(angle = 90) {
+    tetradic(angle = 90) {
       return [
         this.clone(),
         this.hueShift(angle),
-        this.complement(),
+        this.hueShift(180),
         this.hueShift(180 + angle)
       ];
     }
@@ -404,7 +444,7 @@ for (i = 0; i <= 1; i += .1) {
   COLORS.yellow.interpolateTo(COLORS.blue, i).show();
 }
 
-COLORS.yellow.triad().forEach((c) => c.show());
+COLORS.yellow.triadic().forEach((c) => c.show());
 
 for (i = 0; i < 360; i += 30) {
   Color.fromHsv({h: i, s: 1, v: 1}).show();

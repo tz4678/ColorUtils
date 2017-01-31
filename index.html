@@ -28,7 +28,8 @@
         width: 3em;
       }
       .color-block {
-        border-radius: 5px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 10px #000;
         display: inline-block;
         line-height: 80px;
         margin: 5px;
@@ -48,6 +49,7 @@
         </header>
         <main class="main">
           <h2>Цветовой круг</h2> 
+          <p>Цветовой круг был придуман Исааком Ньютоном в 1666 году. С тех пор было создано множество различных вариантов цветового круга. На цветовом круге расположены цвета видимой части электромагнитного спектра: красный, оранжевый, желтый, зеленый, голубой, синий и фиолетовый, а так же их оттенки.</p>
           <div id="color-picker"></div>
           <div id="preview">
             <div id="color-preview"></div>
@@ -65,17 +67,29 @@
           <br clear="both">
           <h3>Цветовые схемы</h3>
           <h4>Комплиментарная цветовая схема</h4>
+          <p>Комплиментарные цвета расположены на цветовом круге напротив друг друга и при смешивании дают серый цвет.</p>
           <div id="complementary"></div>
           <h4>Троичная цветовая схема</h4>
-          <div id="triad"></div>
-          <h4>Квадратичная цветовая схема</h4>
-          <div id="square"></div>
-          <h3>Оттенки</h3>
-          <h4>Оттенки белого</h4>
+          <p></p>
+          <div id="triadic"></div>
+          <h4>Split Complementary</h4>
+          <div id="split-complementary"></div>
+          <h4>Аналогичные цвета</h4>
+          <p>Аналогичные цвета &ndash; это цвета расположенные по соседству на цветовом круге, например, с шагом в 30&deg;.</p>
+          <div id="analogous"></div>
+          <h4>Прямоугольная цветовая схема</h4>
+          <p></p>
+          <div id="tetradic"></div>
+          <h3>Монохромные оттенки</h3>
+          <p>Монохромные оттенки цвета получают путем добавления к нему белого, черного или серого.</p>
+          <h4>Светлые оттенки</h4>
+          <p></p>
           <div id="tints"></div>
-          <h4>Оттенки черного</h4>
+          <h4>Темные оттенки</h4>
+          <p></p>
           <div id="shades"></div>
-          <h4>Оттенки серого</h4>
+          <p></p>
+          <h4>Серые оттенки</h4>
           <div id="tones"></div>
         </main>
         <footer class="footer">&copy; 2016-2017 Sergei Snegirev</footer>
@@ -89,20 +103,14 @@
         r.value = c.r;
         g.value = c.g;
         b.value = c.b;
-        setColorBlocks('complementary', [c, c.complement()]);
-        setColorBlocks('triad', c.triad());
-        setColorBlocks('square', c.tetrad());
-        const tints = [];
-        const shades = [];
-        const tones = [];
-        for (let i = 0; i < 1; i += 0.2) {
-          tints.push(c.tint(i));
-          shades.push(c.shade(i));
-          tones.push(c.tone(i));
-        }
-        setColorBlocks('tints', tints);
-        setColorBlocks('shades', shades);
-        setColorBlocks('tones', tones);
+        setColorBlocks('complementary', c.complementary());
+        setColorBlocks('triadic', c.triadic());
+        setColorBlocks('tetradic', c.tetradic());
+        setColorBlocks('split-complementary', c.splitComplementary());
+        setColorBlocks('analogous', c.analogous());
+        setColorBlocks('tints', c.tints());
+        setColorBlocks('shades', c.shades());
+        setColorBlocks('tones', c.tones());
       }
 
       function createColorBlock(c) {
