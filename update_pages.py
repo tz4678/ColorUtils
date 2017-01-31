@@ -3,9 +3,8 @@ import os
 import re
 
 pages = [
-    'index.htm',
-    'color_picker.htm',
-    'color_names.htm',
+    'index.html',
+    'color_names.html',
 ]
 
 links = collections.OrderedDict()
