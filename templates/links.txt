@@ -1,3 +1,3 @@
-index.htm | Цветовой круг
-color_names.htm | Имена цветов
+index.html | Цветовой круг
+color_names.html | Имена цветов
 https://github.com/tz4678/ColorUtils| GitHub
